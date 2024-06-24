@@ -85,7 +85,6 @@
 
         .hero .content{
             font-family: 'Roboto', sans-serif;
-            font-style: bold;
             font-size: 20px;
             display: flex;
             flex-direction: column;
@@ -366,6 +365,42 @@
             font-weight: bold; /* Poner en negrita el texto de la partida seleccionada */
         }
 
+        #modal-gameDetail {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        #player-modal {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            z-index: 1000; /* Aumenta el valor de z-index */
+        }
+
+        #player-modal-content {
+            padding: 20px;
+        }
+
+        #close-player-modal {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
         @media (max-width: 824px) {
             .hero {
                 flex-direction: column;
@@ -522,7 +557,6 @@
                                 .then(data => {
                                     const gameId = data.id;
                                     console.log(`Juego creado con éxito. ID del juego: ${gameId}`);
-                                    // Aquí puedes agregar lógica adicional para manejar el juego creado
                                 })
                                 .catch(error => console.error('Error al crear el juego:', error));
                                 }
@@ -612,25 +646,96 @@
                                 }
                                 });
 
+                                function getGamePlayers(gameId) {
+                                    fetch(`https://parcial-202425-production.up.railway.app/games/${gameId}/players`)
+                                        .then(response => {
+                                        if (response.ok) {
+                                            return response.json();
+                                        } else if (response.status === 404) {
+                                            throw new Error(`No se encontró el juego con id ${gameId}`);
+                                        } else {
+                                            throw new Error(`Error al obtener los jugadores del juego: ${response.statusText}`);
+                                        }
+                                        })
+                                        .then(players => {
+                                        const playerList = document.getElementById('player-list');
+                                        playerList.innerHTML = '';
+                                        players.forEach(player => {
+                                            const playerButton = document.createElement('button');
+                                            playerButton.textContent = player.name;
+                                            playerButton.dataset.playerId = player.id;
+                                            playerButton.onclick = () => {
+                                            showPlayerDetails(gameId, player.id);
+                                            };
+                                            playerList.appendChild(playerButton);
+                                        });
+                                        })
+                                        .catch(error => {
+                                        console.error(error);
+                                        const playerList = document.getElementById('player-list');
+                                        playerList.innerHTML = `Error: ${error.message}`;
+                                        });
+                                    }
+
+                                    function showPlayerDetails(gameId, playerId) {
+                                    fetch(`https://parcial-202425-production.up.railway.app/games/${gameId}/players/${playerId}`)
+                                        .then(response => {
+                                        if (response.ok) {
+                                            return response.json();
+                                        } else if (response.status === 404) {
+                                            throw new Error(`No se encontró el jugador con id ${playerId} en la partida ${gameId}`);
+                                        } else {
+                                            throw new Error(`Error al obtener los detalles del jugador: ${response.statusText}`);
+                                        }
+                                        })
+                                        .then(playerData => {
+                                        const playerModal = document.getElementById('player-modal');
+                                        const detailModal = document.getElementById('modal-gameDetail');
+                                        const playerModalContent = document.getElementById('player-modal-content');
+                                        playerModalContent.innerHTML = '';
+                                        const playerInfo = `
+                                            <h2>${playerData.name}</h2>
+                                            <p>Avatar: <img src="${playerData.avatar}" alt="Avatar del jugador"></p>
+                                            <p>Información adicional: ${playerData.info}</p>
+                                        `;
+                                        playerModalContent.innerHTML = playerInfo;
+                                        playerModal.style.display = 'block';
+                                        detailModal.style.display = 'none';
+                                        })
+                                        .catch(error => {
+                                        console.error(error);
+                                        const playerModalContent = document.getElementById('player-modal-content');
+                                        playerModalContent.innerHTML = `Error: ${error.message}`;
+                                        });
+                                }
+                                
+                                const closePlayerModalButton = document.getElementById('close-player-modal');
+                                closePlayerModalButton.addEventListener('click', function() {
+                                    const playerModal = document.getElementById('player-modal');
+                                    const detailModal = document.getElementById('modal-gameDetail');
+                                    playerModal.style.display = 'none';
+                                    detailModal.style.display = 'block';
+                                });
+
                                 // Función para mostrar el modal
                                 function showModal(gameData) {
+                                    console.log('Mostrar detalles del juego:', gameData);
                                     const modal = document.getElementById('modal-gameDetail');
                                     const gameTitle = document.getElementById('game-title');
                                     const gameDescription = document.getElementById('game-description');
-                                    const gameAvatar = document.getElementById('game-avatar');
+                                    const playerList = document.getElementById('player-list');
 
                                     if (gameData) {
-                                        gameTitle.textContent = `Detalles del juego ${gameData.id}`;
-                                        gameDescription.textContent = `Jugadores: ${gameData.players.map(player => player.name).join(', ')}`;
-                                        // No hay una propiedad "avatar" en los datos, así que no podemos mostrar una imagen
-                                        gameAvatar.src = '';
+                                        gameTitle.textContent = `Detalles del juego ID: ${gameData.id}`;
+                                        gameDescription.textContent = `Jugadores:`;
+                                        getGamePlayers(gameData.id);
                                     } else {
                                         gameTitle.textContent = 'No se encontraron detalles del juego';
                                         gameDescription.textContent = '';
-                                        gameAvatar.src = '';
                                     }
-                                    getGamePlayers(gameData.id);
+
                                     modal.style.display = 'block';
+                                    document.body.appendChild(modal); 
                                 }
 
                                 // Función para cerrar el modal
@@ -647,27 +752,7 @@
                                 closeModal();
                                 });
 
-                                function getGamePlayers(gameId) {
-                                    fetch(`https://parcial-202425-production.up.railway.app/games/${gameId}/players`)
-                                    .then(response => {
-                                        if (response.ok) {
-                                            return response.json();
-                                        } else if (response.status === 404) {
-                                            throw new Error(`No se encontró el juego con id ${gameId}`);
-                                        } else {
-                                            throw new Error(`Error al obtener los jugadores del juego: ${response.statusText}`);
-                                        }
-                                        })
-                                    .then(players => {
-                                        const gameDescription = document.getElementById('game-description');
-                                        gameDescription.textContent = `Jugadores: ${players.map(player => player.name).join(', ')}`;
-                                        })
-                                    .catch(error => {
-                                        console.error(error);
-                                        const gameDescription = document.getElementById('game-description');
-                                        gameDescription.textContent = `Error: ${error.message}`;
-                                        });
-                                    }
+                                
 
                                 joinButton.addEventListener('click', () => {
                                     if (!selectedGameId) {
@@ -712,14 +797,18 @@
                     </section>
                 </section>
                 <!-- Modal -->
-                <div id="modal-gameDetail" class="modal">
-                    <div class="modal-content">
+                <div id="modal-gameDetail" style="display: none;">
                     <h2 id="game-title"></h2>
                     <p id="game-description"></p>
-                    <img id="game-avatar" src="" alt="Avatar del juego">
+                    <ul id="player-list"></ul>
+                    <!-- Botones del modal -->
                     <button id="close-modal">Cerrar</button>
                     <button id="join-game">Unirse al juego</button>
-                    </div>
+                </div>
+                <!-- Modal de jugador -->
+                <div id="player-modal" style="display: none;">
+                    <div id="player-modal-content"></div>
+                    <button id="close-player-modal">Cerrar</button>
                 </div>
             </div>
             <script>
