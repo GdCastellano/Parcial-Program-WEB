@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="es-VE">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Parcial Gabriel Castellano</title>
+
+    <link rel="shortcut icon" type="image/x-icon" href="https://modulo7-canvas-production.s3.us-east-2.amazonaws.com/account_1/attachments/7175/faviconucab.png">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    <!-- Styles -->
+    
+    <style>
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        } 
+
+        header {
+            background-color: #1d3557;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            display: flex;
+            justify-content: center;
+            top: 0;
+            width: 100%;
+        }
+
+        .title {
+            font-family: 'Eczar', serif;
+            display: inline-block;
+            text-align: center;
+            align-self: center;
+            color: #f1faee;
+            font-size: 2.5rem;
+            margin-left: 10px;
+            margin: 10px;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            background-color: #ffffff;
+            background-image: url("https://www.transparenttextures.com/patterns/batthern.png");
+        }
+
+        .hero {
+            display: flex;
+            /*flex-direction: column;*/
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            padding: 175px 40px;
+        }
+
+       
+        .hero-content {
+            display: flex;
+            font-family: 'Roboto', sans-serif;
+            text-align: center;
+            max-width: 800px;
+        }
+        .hero-content h2 {
+            font-size: 2.5rem;
+            color: #333;
+                margin-bottom: 10px;
+            }
+
+        .hero-content p {
+            font-size: 1.5rem;
+            color: #333;
+        }
+
+        .subtitle{
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .hero .content{
+            font-family: 'Roboto', sans-serif;
+            font-style: bold;
+            font-size: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            margin-left: 30px;
+        }
+
+        .btn-inicio {
+            background-color: #e63946;
+            color: #fff;
+            font-size: 2rem;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        .btn-inicio:hover {
+            background-color: #1D3557;
+            color: #A8DADC;
+            transition: ease-in 0.3s;
+        }
+
+        .instructions {
+        background-color: #f7f7f7; /* Fondo claro */
+        padding: 20px; /* Espacio interior */
+        border-radius: 10px; /* Borde redondeado */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+        }
+
+        .instructions h2 {
+        font-size: 24px; /* Tamaño de título */
+        font-weight: bold; /* Negrita */
+        color: #333; /* Color de título */
+        margin-bottom: 10px; /* Espacio entre título y lista */
+        }
+
+        .instructions ol {
+        list-style: none; /* Quitar estilo de lista predeterminado */
+        padding: 0; /* Quitar padding de lista */
+        margin: 0; /* Quitar margen de lista */
+        }
+
+        .instructions li {
+        background-color: #fff; /* Fondo blanco para cada item */
+        padding: 10px; /* Espacio interior para cada item */
+        border-bottom: 1px solid #ddd; /* Borde inferior para cada item */
+        }
+
+        .instructions li:before {
+        content: "\2713"; /* Icono de tick (✔) */
+        font-size: 18px; /* Tamaño de icono */
+        color: #4CAF50; /* Color de icono */
+        margin-right: 10px; /* Espacio entre icono y texto */
+        }
+
+        .instructions li:last-child {
+        border-bottom: none; /* Quitar borde inferior del último item */
+        }
+        
+        .name-avatar {
+            display: flexbox;
+            background-color: #f0f0f0;
+            text-align: center;
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        .name-avatar form {
+            display: inline;
+        }
+
+        .name-avatar .avatar {
+            display: inline-block;
+            margin: 10px 0;
+        }
+
+        .avatar img {
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+        }
+
+        .avatar button {
+            background-color: #333;
+            color: #fff;
+            font-size: 1rem;
+            padding: 5px 10px;
+            top: 50%;   
+            border: none;
+            border-radius: 5px;
+            margin: 0 10px;
+            cursor: pointer;
+        }
+                    
+        footer {
+            position: static;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: #457B9D;
+            color: #1D3557;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #F1FAEE;
+            border-radius: 3%;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+
+        .carousel {
+            width: 100%; /* Ancho del carrusel */
+            max-width: 800px; /* Ancho máximo del carrusel */
+            margin: 40px auto; /* Espacio superior e inferior, y centrado horizontalmente */
+            text-align: center; /* Centrar horizontalmente el contenido */
+        }
+
+        .carousel-inner {
+            display: flex; /* Display flex para centrar horizontalmente las imágenes */
+            justify-content: center; /* Centrar horizontalmente las imágenes */
+            flex-wrap: nowrap; /* No permitir que las imágenes se envuelvan */
+        }
+
+        .carousel-inner img {
+            width: 100px; /* Ancho de la imagen */
+            height: 100px; /* Alto de la imagen */
+            object-fit: cover; /* Para que la imagen se ajuste al tamaño definido */
+            border-radius: 50%; /* Para darle un borde redondeado a la imagen */
+            margin: 10px; /* Espacio entre las imágenes */
+        }
+
+        .carousel-prev, .carousel-next {
+            position: absolute; /* Posicionar los botones fuera del flujo normal */
+            top: 50%; /* Posicionar los botones en el centro vertical */
+            z-index: 1; /* Poner los botones encima del carrusel */
+        }
+
+        .carousel-prev {
+            left: 10px; /* Posicionar el botón anterior a 10px del borde izquierdo */
+            font-size: 40px;
+            padding: 20px 20px;
+        }
+
+        .carousel-next {
+            right: 10px; /* Posicionar el botón siguiente a 10px del borde derecho */
+            font-size: 40px;
+            padding: 20px 20px;
+        }
+
+        .avatar-nombre h1{
+            font-size: 40px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .username-input {
+            margin-top: 20px; /* Espacio entre el carrusel y el campo de texto */
+            padding: 20px; /* Espacio interior */
+            background-color: #f7f7f7; /* Fondo claro */
+            border-radius: 10px; /* Borde redondeado */
+            box-shadow: 0 0 200px rgba(0, 0, 0, 0.1); /* Sombra suave */
+        }
+
+        .username-input label {
+            font-size: 20px; /* Tamaño de etiqueta */
+            font-weight: bold; /* Negrita */
+            color: #333; /* Color de etiqueta */
+            margin-bottom: 10px; /* Espacio entre etiqueta y campo de texto */
+        }
+
+        .username-input input[type="text"] {
+            width: 100%; /* Ancho del campo de texto */
+            padding: 10px; /* Espacio interior del campo de texto */
+            font-size: 18px; /* Tamaño de texto */
+            border: none; /* Quitar borde del campo de texto */
+            border-radius: 10px; /* Borde redondeado del campo de texto */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra suave del campo de texto */
+        }
+
+        .username-input input[type="text"]:focus {
+            outline: none; /* Quitar borde de foco */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Sombra más oscura al enfocar */
+        }
+
+        .buttons {
+        margin-top: 20px; /* Espacio entre el campo de texto y los botones */
+        display: flex; /* Distribuir botones horizontalmente */
+        justify-content: space-evenly; /* Espacio entre botones */
+        border-radius: 2%;
+        }
+
+        .cancel-button {
+        background-color: #ccc; /* Fondo gris claro */
+        color: #333; /* Color de texto */
+        border: none; /* Quitar borde del botón */
+        padding: 10px 20px; /* Espacio interior del botón */
+        font-size: 18px; /* Tamaño de texto */
+        cursor: pointer; /* Cursor de mano */
+        }
+
+        .cancel-button:hover {
+        background-color: #aaa; /* Fondo gris oscuro al pasar el cursor */
+        }
+
+        .save-button {
+        background-color: #4CAF50; /* Fondo verde */
+        color: #fff; /* Color de texto blanco */
+        border: none; /* Quitar borde del botón */
+        padding: 10px 20px; /* Espacio interior del botón */
+        font-size: 18px; /* Tamaño de texto */
+        cursor: pointer; /* Cursor de mano */
+        }
+
+        .save-button:hover {
+        background-color: #3e8e41; /* Fondo verde oscuro al pasar el cursor */
+        }
+
+        /* Estilos para la sección de partidas */
+        .game-list-section {
+        padding: 40px;
+        text-align: center;
+        }
+
+        .game-list-section ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        }
+
+        .game-list-section li {
+        display: inline-block;
+        margin: 10px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        cursor: pointer;
+        }
+
+        .game-list-section li:hover {
+        background-color: #f7f7f7;
+        }
+
+        .game-list-section .buttons {
+        text-align: center;
+        margin-top: 20px;
+        }
+
+        .game-list-section .join-button, .game-list-section .create-button {
+        margin: 10px;
+        padding: 10px 20px;
+        font-size: 18px;
+        cursor: pointer;
+        }
+
+        .selected {
+            background-color: #e63946; /* Color de fondo para la partida seleccionada */
+            font-weight: bold; /* Poner en negrita el texto de la partida seleccionada */
+        }
+
+        @media (max-width: 824px) {
+            .hero {
+                flex-direction: column;
+                padding: 40px;
+            }
+
+            footer {
+                position: static;
+            }
+        }
+
+    </style>
+
+</head>
+<body>
+    <header>
+        <h1 class="title">Piedra, Papel o Tijeras</h1>
+    </header>
+
+    <main>
+        
+        <section class="hero">
+            <div class="hero-content">
+                <img src="https://www.pinclipart.com/picdir/big/492-4926824_march-6-april-legend-of-rock-paper-scissors.png" alt="Logo Juego" height="300" width="300"> 
+                
+            </div>
+            <div class="content">
+                <p class="subtitle"><strong>¿Listos para un enfrentamiento épico?</strong></p> 
+                <br>
+                <p> En un mundo donde las decisiones rápidas pueden cambiar el destino, tres elementos se alzan: la Roca Firme, el Papel Astuto y las Tijeras Afiladas. ¿Cuál elegirás? ¿Serás inquebrantable como la roca, astuto como el papel o afilado como las tijeras?</p>
+                <br>
+                <p><strong>¡Desafía a tus amigos y descubre quién domina este antiguo juego de estrategia!</strong></p>
+                <br>
+                <button class="btn-inicio" onclick="openModal()"><i class="fas fa-play"></i> Iniciar Juego</button>
+            </div>
+        </section>
+
+        
+        <div class="modal" id="modal">
+            <div class="modal-content">
+                <section class="instructions" id="instructions" style="display: none;">
+                    <h2>Instrucciones</h2>
+                    <ol>
+                        <li>Elige tu avatar</li>
+                        <li>Ingresa tu nombre</li>
+                        <li>Comparte el ID de juego</li>
+                        <li>Espera a que tu oponente se una al juego</li>
+                        <li>¡Comienza a jugar y diviértete!</li>
+                    </ol>
+                </section>
+                <section class="avatar-nombre">
+                    <h1>Avatar y Nombre</h1>
+                    <div class="carousel">
+                        <div class="carousel-inner"></div>
+                        <button class="carousel-prev">‹</button>
+                        <button class="carousel-next">›</button>
+                    </div>
+                    <script>
+                        let currentIndex = 0;
+                        let avatars = [];
+
+                        function getAvatars() {
+                            fetch('https://parcial-202425-production.up.railway.app/games/avatars')
+                                .then(response => response.text()) // Obtiene la respuesta como texto
+                                .then(data => {
+                                    // Convierte la cadena a un array de JavaScript
+                                    avatars = JSON.parse(data);
+                                    const carouselInner = document.querySelector('.carousel-inner');
+
+                                    avatars.forEach((avatarUrl, index) => {
+                                        const avatarImage = document.createElement('img');
+                                        avatarImage.src = avatarUrl;
+                                        avatarImage.alt = `Avatar ${index + 1}`;
+                                        carouselInner.appendChild(avatarImage);
+                                    });
+
+                                    const carouselPrev = document.querySelector('.carousel-prev');
+                                    const carouselNext = document.querySelector('.carousel-next');
+
+                                    carouselPrev.addEventListener('click', () => {
+                                        currentIndex--;
+                                        if (currentIndex < 0) {
+                                            currentIndex = avatars.length - 1;
+                                        }
+                                        updateCarousel();
+                                        console.log('currentIndex:', currentIndex);
+                                        console.log('avatar:', avatars[currentIndex]);
+                                    });
+
+                                    carouselNext.addEventListener('click', () => {
+                                        currentIndex++;
+                                        if (currentIndex >= avatars.length) {
+                                            currentIndex = 0;
+                                        }
+                                        updateCarousel();
+                                        console.log('currentIndex:', currentIndex);
+                                        console.log('avatar:', avatars[currentIndex]);
+                                    });
+
+                                    function updateCarousel() {
+                                        const carouselImages = carouselInner.children;
+                                        for (let i = 0; i < carouselImages.length; i++) {
+                                            carouselImages[i].style.display = 'none';
+                                        }
+                                        carouselImages[currentIndex].style.display = 'inline-block';
+                                    }
+                                })
+                                .catch(error => console.error('Error al cargar los avatares:', error));
+                        }
+
+                        document.addEventListener('DOMContentLoaded', getAvatars);
+                    </script>
+                    <div class="username-input">
+                        <label for="username">Ingresa tu nombre de usuario:</label>
+                        <br>
+                        <input type="text" id="username" name="username" required>
+                    </div>
+                    <div class="buttons">
+                        <button class="instructions-button" onclick="openInstrucciones()">Instrucciones</button>
+                    </div>
+                    <section class="game-list-section">
+                        <h1>Partidas disponibles</h1>
+                        <input id="search-input" type="search" placeholder="Buscar por nombre o ID" style="align-items: end;">
+                        <ul id="game-list"></ul>
+                        <div class="buttons">
+                            <button class="join-button" id="joinButton">Unirse a partida</button>
+                            <button class="create-button" onclick="createGame()">Crear nueva partida</button>
+                            <button class="cancel-button" onclick="closeModal()">Cerrar</button>
+                        </div>
+                        <script>
+                            function createGame() {
+                                const usernameInput = document.getElementById('username');
+                                const username = usernameInput.value.trim();
+                                const avatarUrl = avatars[currentIndex];
+
+                                if (username === '') {
+                                    alert('Ingresa un nombre de usuario');
+                                    return;
+                                }
+
+                                const gameData = {
+                                    name: username,
+                                    avatar: avatarUrl
+                                };
+
+                                fetch('https://parcial-202425-production.up.railway.app/games', {
+                                    method: 'POST',
+                                    headers: {
+                                    'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify(gameData)
+                                })
+                                .then(response => response.json())
+                                .then(data => {
+                                    const gameId = data.id;
+                                    console.log(`Juego creado con éxito. ID del juego: ${gameId}`);
+                                    // Aquí puedes agregar lógica adicional para manejar el juego creado
+                                })
+                                .catch(error => console.error('Error al crear el juego:', error));
+                                }
+                            document.addEventListener('DOMContentLoaded', () => {
+                                const gameList = document.getElementById('game-list');
+                                const searchInput = document.getElementById('search-input');
+                                const joinButton = document.getElementById('joinButton');
+                                let selectedGameId = null;
+
+                                fetch('https://parcial-202425-production.up.railway.app/games')
+                                    .then(response => response.json())
+                                    .then(games => {
+                                        const gamesToShow = games.slice(0, 10); // Mostrar solo 10 partidas
+                                        renderGames(gamesToShow);
+                                        searchInput.addEventListener('input', (e) => {
+                                            const searchTerm = e.target.value.toLowerCase();
+                                            if (searchTerm === '') { // Si el texto de búsqueda está vacío
+                                                const gamesToShow = games.slice(0, 10); // Mostrar solo 10 partidas
+                                                renderGames(gamesToShow);
+                                            } else {
+                                                const filteredGames = games.filter((game) => {
+                                                    let playerName = '';
+                                                    if (game.info.players && game.info.players[0]) {
+                                                        playerName = game.info.players[0].name.toLowerCase();
+                                                    }
+                                                    const gameId = game.id.toLowerCase();
+                                                    return playerName.includes(searchTerm) || gameId.includes(searchTerm);
+                                                });
+                                                renderGames(filteredGames);
+                                            }
+                                        });
+                                    })
+                                    .catch(error => {
+                                        console.error('Error al obtener la lista de juegos:', error);
+                                    });
+
+                                function renderGames(games) {
+                                    gameList.innerHTML = ''; // Limpiar la lista
+                                    games.forEach((game) => {
+                                        const playersList = game.info.players.map((player) => player.name).join(', ');
+                                        const gameListItem = document.createElement('li');
+                                        gameListItem.textContent = `Partida ${game.id} - Jugadores: ${playersList}`;
+                                        gameListItem.dataset.gameId = game.id; // Agregar ID de juego a cada elemento de la lista
+                                        gameList.appendChild(gameListItem);
+                                    });
+                                }
+
+                                // Agregamos un botón para ver detalles del juego
+                                gameList.addEventListener('click', (e) => {
+                                if (e.target.tagName === 'LI') {
+                                    const gameId = e.target.dataset.gameId;
+                                    if (selectedGameId!== gameId) {
+                                    // Desmarcar partida anterior
+                                    if (selectedGameId) {
+                                        const previousGameListItem = gameList.querySelector(`[data-game-id="${selectedGameId}"]`);
+                                        previousGameListItem.classList.remove('selected');
+                                    }
+                                    // Marcar partida seleccionada
+                                    e.target.classList.add('selected');
+                                    selectedGameId = gameId;
+
+                                    // Mostrar botón para ver detalles del juego
+                                    const gameDetailsButton = document.createElement('button');
+                                    gameDetailsButton.textContent = 'Ver detalles del juego';
+                                    gameDetailsButton.onclick = () => {
+                                        fetch(`https://parcial-202425-production.up.railway.app/games/${gameId}`)
+                                        .then(response => {
+                                            if (response.ok) {
+                                            return response.json();
+                                            } else if (response.status === 404) {
+                                            alert('No se encontró el juego con el ID especificado');
+                                            return null;
+                                            } else {
+                                            throw new Error('Error al obtener detalles del juego');
+                                            }
+                                        })
+                                        .then(data => {
+                                            console.log(data); // Agregamos esta línea para imprimir la respuesta en la consola
+                                            if (data) {
+                                            showModal(data);
+                                            }
+                                        })
+                                        .catch(error => console.error('Error al obtener detalles del juego:', error));
+                                    };
+                                    e.target.appendChild(gameDetailsButton);
+                                    }
+                                }
+                                });
+
+                                // Función para mostrar el modal
+                                function showModal(gameData) {
+                                    const modal = document.getElementById('modal-gameDetail');
+                                    const gameTitle = document.getElementById('game-title');
+                                    const gameDescription = document.getElementById('game-description');
+                                    const gameAvatar = document.getElementById('game-avatar');
+
+                                    if (gameData) {
+                                        gameTitle.textContent = `Detalles del juego ${gameData.id}`;
+                                        gameDescription.textContent = `Jugadores: ${gameData.players.map(player => player.name).join(', ')}`;
+                                        // No hay una propiedad "avatar" en los datos, así que no podemos mostrar una imagen
+                                        gameAvatar.src = '';
+                                    } else {
+                                        gameTitle.textContent = 'No se encontraron detalles del juego';
+                                        gameDescription.textContent = '';
+                                        gameAvatar.src = '';
+                                    }
+                                    getGamePlayers(gameData.id);
+                                    modal.style.display = 'block';
+                                }
+
+                                // Función para cerrar el modal
+                                function closeModal() {
+                                    const modal = document.getElementById('modal-gameDetail');
+                                    modal.style.display = 'none';
+                                }
+
+                                // Agregamos eventos a los botones del modal
+                                document.getElementById('close-modal').addEventListener('click', closeModal);
+                                document.getElementById('join-game').addEventListener('click', () => {
+                                // Aquí puedes agregar la lógica para unirse al juego
+                                console.log('Unirse al juego');
+                                closeModal();
+                                });
+
+                                function getGamePlayers(gameId) {
+                                    fetch(`https://parcial-202425-production.up.railway.app/games/${gameId}/players`)
+                                    .then(response => {
+                                        if (response.ok) {
+                                            return response.json();
+                                        } else if (response.status === 404) {
+                                            throw new Error(`No se encontró el juego con id ${gameId}`);
+                                        } else {
+                                            throw new Error(`Error al obtener los jugadores del juego: ${response.statusText}`);
+                                        }
+                                        })
+                                    .then(players => {
+                                        const gameDescription = document.getElementById('game-description');
+                                        gameDescription.textContent = `Jugadores: ${players.map(player => player.name).join(', ')}`;
+                                        })
+                                    .catch(error => {
+                                        console.error(error);
+                                        const gameDescription = document.getElementById('game-description');
+                                        gameDescription.textContent = `Error: ${error.message}`;
+                                        });
+                                    }
+
+                                joinButton.addEventListener('click', () => {
+                                    if (!selectedGameId) {
+                                        alert('No has seleccionado una partida');
+                                        return;
+                                    }
+
+                                    const usernameInput = document.getElementById('username');
+                                    const username = usernameInput.value.trim();
+                                    if (!username) {
+                                        alert('Ingresa un nombre de usuario');
+                                        return;
+                                    }
+
+                                    const avatarUrl = avatars[currentIndex]; // Obtener el avatar seleccionado
+                                    if (!avatarUrl) {
+                                        alert('No has seleccionado un avatar');
+                                        return;
+                                    }
+
+                                    fetch(`https://parcial-202425-production.up.railway.app/games/${selectedGameId}/players`, {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json'
+                                        },
+                                        body: JSON.stringify({ name: username, avatar: avatarUrl })
+                                    })
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            console.log('Jugador creado con éxito:', data);
+                                            // Cerrar modal y mostrar mensaje de éxito
+                                            closeModal();
+                                            alert(`Te has unido a la partida ${selectedGameId} con éxito!`);
+                                        })
+                                        .catch(error => {
+                                            console.error('Error al unirse a la partida:', error);
+                                            alert('Error al unirse a la partida. Inténtalo de nuevo más tarde.');
+                                        });
+                                });
+                            });
+                        </script>
+                    </section>
+                </section>
+                <!-- Modal -->
+                <div id="modal-gameDetail" class="modal">
+                    <div class="modal-content">
+                    <h2 id="game-title"></h2>
+                    <p id="game-description"></p>
+                    <img id="game-avatar" src="" alt="Avatar del juego">
+                    <button id="close-modal">Cerrar</button>
+                    <button id="join-game">Unirse al juego</button>
+                    </div>
+                </div>
+            </div>
+            <script>
+                // Remove the duplicate declaration of 'selectedGameId'
+                let username = '';
+                let avatarUrl = '';
+
+                // Abrir modal cuando se hace clic en "Unirse a Partida"
+                function openModal() {
+                    const modal = document.getElementById('modal');
+                    modal.style.display = 'block';
+                }
+
+                // Cerrar modal
+                function closeModal() {
+                    document.getElementById('modal').style.display = 'none';
+                }
+            </script>
+        </div>
+    </main>
+
+    <footer>
+        <p><strong>Desarrollado por Gabriel Castellano</strong></p>
+    </footer>
+</body>
+</html>
