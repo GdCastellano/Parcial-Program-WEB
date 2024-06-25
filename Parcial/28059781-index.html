@@ -6,12 +6,19 @@
     <title>Parcial Gabriel Castellano</title>
 
     <link rel="shortcut icon" type="image/x-icon" href="https://modulo7-canvas-production.s3.us-east-2.amazonaws.com/account_1/attachments/7175/faviconucab.png">
-
+    
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
     <!-- Styles -->
     
     <style>
+
+        :root {
+            --color-fondo-main: #ffffff;
+            --color-texto: #333;
+            --color-botones: #e63946;
+            --color-botones-hover: #1D3557;
+        }
         
         * {
             margin: 0;
@@ -20,7 +27,7 @@
         } 
 
         header {
-            background-color: #1d3557;
+            background-color: var(--color-botones-hover);
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
             position: sticky;
             display: flex;
@@ -34,7 +41,7 @@
             display: inline-block;
             text-align: center;
             align-self: center;
-            color: #f1faee;
+            color: var(--color-fondo-main);
             font-size: 2.5rem;
             margin-left: 10px;
             margin: 10px;
@@ -46,7 +53,7 @@
             align-items: center;
             justify-content: center;
             width: 100%;
-            background-color: #ffffff;
+            background-color: var(--color-fondo-main);
             background-image: url("https://www.transparenttextures.com/patterns/batthern.png");
         }
 
@@ -68,18 +75,18 @@
         }
         .hero-content h2 {
             font-size: 2.5rem;
-            color: #333;
+            color: var(--color-botones-hover);
                 margin-bottom: 10px;
             }
 
         .hero-content p {
             font-size: 1.5rem;
-            color: #333;
+            color: var(--color-botones-hover);
         }
 
         .subtitle{
             font-size: 2rem;
-            color: #333;
+            color: var(--color-botones-hover);
             margin-bottom: 10px;
         }
 
@@ -297,19 +304,6 @@
         border-radius: 2%;
         }
 
-        .cancel-button {
-        background-color: #ccc; /* Fondo gris claro */
-        color: #333; /* Color de texto */
-        border: none; /* Quitar borde del botón */
-        padding: 10px 20px; /* Espacio interior del botón */
-        font-size: 18px; /* Tamaño de texto */
-        cursor: pointer; /* Cursor de mano */
-        }
-
-        .cancel-button:hover {
-        background-color: #aaa; /* Fondo gris oscuro al pasar el cursor */
-        }
-
         .save-button {
         background-color: #4CAF50; /* Fondo verde */
         color: #fff; /* Color de texto blanco */
@@ -353,11 +347,11 @@
         margin-top: 20px;
         }
 
-        .game-list-section .join-button, .game-list-section .create-button {
-        margin: 10px;
-        padding: 10px 20px;
-        font-size: 18px;
-        cursor: pointer;
+        .game-list-section .join-button, .game-list-section .create-button, .game-list-section .cancel-button, .buttons .instructions-button, .close-modal, #player-modal #close-player-modal{
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
         }
 
         .selected {
@@ -395,10 +389,92 @@
             padding: 20px;
         }
 
-        #close-player-modal {
-            position: absolute;
-            top: 10px;
-            right: 10px;
+        
+
+        /* Modal de juego */
+        #game-modal {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        }
+
+        #game-modal-content {
+        background-color: #f9f9f9;
+        margin: 10% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        #game-modal-content h2 {
+        margin-top: 0;
+        }
+
+        #game-actions {
+        text-align: center;
+        margin-top: 20px;
+        }
+
+        #game-actions button {
+        background-color: #4CAF50;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        }
+
+        #game-actions button:hover {
+        background-color: #3e8e41;
+        }
+
+        #game-actions button:active {
+        background-color: #3e8e41;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        #opponent-name {
+        text-align: center;
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        }
+
+        .opponent-name-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 20px;
+        }
+
+        .opponent-avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        margin-right: 10px;
+        }
+
+        #game-modal-content ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        }
+
+        #game-modal-content li {
+        margin-bottom: 10px;
+        }
+
+        #game-modal-content li:before {
+        content: '•';
+        margin-right: 10px;
+        color: #4CAF50;
         }
 
         @media (max-width: 824px) {
@@ -410,6 +486,84 @@
             footer {
                 position: static;
             }
+        }
+
+        .notification {
+            position: fixed;
+            top: 50px;
+            right: 20px;
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeOut {
+            0% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+        }
+
+        #search-input {
+        /* Estilos generales */
+        width: 250px;
+        height: 40px;
+        padding: 10px;
+        border: none;
+        border-radius: 20px;
+        font-size: 18px;
+        font-weight: bold;
+        color: #333;
+        background-color: #ffffff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
+        /* Estilos de placeholder */
+        ::-webkit-input-placeholder {
+            color: #999;
+            font-style: italic;
+        }
+        :-moz-placeholder {
+            color: #999;
+            font-style: italic;
+        }
+        ::-moz-placeholder {
+            color: #999;
+            font-style: italic;
+        }
+        :-ms-input-placeholder {
+            color: #999;
+            font-style: italic;
+        }
+
+        /* Estilos de foco */
+        :focus {
+            outline: none;
+            border: 2px solid #4CAF50;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Estilos de hover */
+        :hover {
+            background-color: #f2f2f2;
+            cursor: pointer;
+        }
         }
 
     </style>
@@ -441,16 +595,7 @@
         
         <div class="modal" id="modal">
             <div class="modal-content">
-                <section class="instructions" id="instructions" style="display: none;">
-                    <h2>Instrucciones</h2>
-                    <ol>
-                        <li>Elige tu avatar</li>
-                        <li>Ingresa tu nombre</li>
-                        <li>Comparte el ID de juego</li>
-                        <li>Espera a que tu oponente se una al juego</li>
-                        <li>¡Comienza a jugar y diviértete!</li>
-                    </ol>
-                </section>
+                
                 <section class="avatar-nombre">
                     <h1>Avatar y Nombre</h1>
                     <div class="carousel">
@@ -461,6 +606,11 @@
                     <script>
                         let currentIndex = 0;
                         let avatars = [];
+
+                        function openInstrucciones() {
+                            const instructionsSection = document.getElementById('instructions');
+                            instructionsSection.style.display = 'block';
+                        }
 
                         function getAvatars() {
                             fetch('https://parcial-202425-production.up.railway.app/games/avatars')
@@ -521,9 +671,19 @@
                     <div class="buttons">
                         <button class="instructions-button" onclick="openInstrucciones()">Instrucciones</button>
                     </div>
+                    <section class="instructions" id="instructions" style="display: none;">
+                        <h2>Instrucciones</h2>
+                        <ol>
+                            <li>Elige tu avatar</li>
+                            <li>Ingresa tu nombre</li>
+                            <li>Comparte el ID de juego</li>
+                            <li>Espera a que tu oponente se una al juego</li>
+                            <li>¡Comienza a jugar y diviértete!</li>
+                        </ol>
+                    </section>
                     <section class="game-list-section">
                         <h1>Partidas disponibles</h1>
-                        <input id="search-input" type="search" placeholder="Buscar por nombre o ID" style="align-items: end;">
+                        <input id="search-input" type="search" placeholder="Buscar ID" style="align-items: end;">
                         <ul id="game-list"></ul>
                         <div class="buttons">
                             <button class="join-button" id="joinButton">Unirse a partida</button>
@@ -557,9 +717,12 @@
                                 .then(data => {
                                     const gameId = data.id;
                                     console.log(`Juego creado con éxito. ID del juego: ${gameId}`);
+                                    // Mostrar el modal de juego
+                                    showGameModal(gameId);
                                 })
                                 .catch(error => console.error('Error al crear el juego:', error));
-                                }
+                            }
+                            let gamesList = [];
                             document.addEventListener('DOMContentLoaded', () => {
                                 const gameList = document.getElementById('game-list');
                                 const searchInput = document.getElementById('search-input');
@@ -569,6 +732,7 @@
                                 fetch('https://parcial-202425-production.up.railway.app/games')
                                     .then(response => response.json())
                                     .then(games => {
+                                        gamesList = games;
                                         const gamesToShow = games.slice(0, 10); // Mostrar solo 10 partidas
                                         renderGames(gamesToShow);
                                         searchInput.addEventListener('input', (e) => {
@@ -578,14 +742,12 @@
                                                 renderGames(gamesToShow);
                                             } else {
                                                 const filteredGames = games.filter((game) => {
-                                                    let playerName = '';
-                                                    if (game.info.players && game.info.players[0]) {
-                                                        playerName = game.info.players[0].name.toLowerCase();
-                                                    }
+                                                    const filteredGames = games.filter((game) => {
                                                     const gameId = game.id.toLowerCase();
-                                                    return playerName.includes(searchTerm) || gameId.includes(searchTerm);
+                                                    return gameId.includes(searchTerm);
+                                                    });
+                                                    renderGames(filteredGames);
                                                 });
-                                                renderGames(filteredGames);
                                             }
                                         });
                                     })
@@ -664,16 +826,20 @@
                                             const playerButton = document.createElement('button');
                                             playerButton.textContent = player.name;
                                             playerButton.dataset.playerId = player.id;
+                                            playerButton.style.margin = '10px';
+                                            playerButton.style.padding= '10px 20px';
+                                            playerButton.style.fontSize= '18px';
+                                            playerButton.style.cursor= 'pointer';
                                             playerButton.onclick = () => {
-                                            showPlayerDetails(gameId, player.id);
+                                                showPlayerDetails(gameId, player.id);
                                             };
                                             playerList.appendChild(playerButton);
                                         });
                                         })
                                         .catch(error => {
-                                        console.error(error);
-                                        const playerList = document.getElementById('player-list');
-                                        playerList.innerHTML = `Error: ${error.message}`;
+                                            console.error(error);
+                                            const playerList = document.getElementById('player-list');
+                                            playerList.innerHTML = `Error: ${error.message}`;
                                         });
                                     }
 
@@ -696,8 +862,9 @@
                                         const playerInfo = `
                                             <h2>${playerData.name}</h2>
                                             <p>Avatar: <img src="${playerData.avatar}" alt="Avatar del jugador"></p>
-                                            <p>Información adicional: ${playerData.info}</p>
-                                        `;
+                                            <p>Victorias: ${playerData.wins}</p>
+                                            <p>Empates: ${playerData.ties}</p>
+                                            <p>Derrotas: ${playerData.loses}</p>     `;
                                         playerModalContent.innerHTML = playerInfo;
                                         playerModal.style.display = 'block';
                                         detailModal.style.display = 'none';
@@ -746,11 +913,7 @@
 
                                 // Agregamos eventos a los botones del modal
                                 document.getElementById('close-modal').addEventListener('click', closeModal);
-                                document.getElementById('join-game').addEventListener('click', () => {
-                                // Aquí puedes agregar la lógica para unirse al juego
-                                console.log('Unirse al juego');
-                                closeModal();
-                                });
+                                
 
                                 
 
@@ -762,6 +925,7 @@
 
                                     const usernameInput = document.getElementById('username');
                                     const username = usernameInput.value.trim();
+                                    
                                     if (!username) {
                                         alert('Ingresa un nombre de usuario');
                                         return;
@@ -772,27 +936,51 @@
                                         alert('No has seleccionado un avatar');
                                         return;
                                     }
+                                    
+                                    localStorage.setItem('usuario', username);
+                                    localStorage.setItem('avatarUsuario', avatarUrl);
+
+                                    const nameUser = localStorage.getItem('usuario');
+                                    const avatarUser = localStorage.getItem('avatarUsuario');
+
+                                    console.log(nameUser);
+                                    console.log(avatarUser);
 
                                     fetch(`https://parcial-202425-production.up.railway.app/games/${selectedGameId}/players`, {
                                         method: 'POST',
                                         headers: {
-                                            'Content-Type': 'application/json'
+                                        'Content-Type': 'application/json'
                                         },
                                         body: JSON.stringify({ name: username, avatar: avatarUrl })
                                     })
-                                        .then(response => response.json())
-                                        .then(data => {
-                                            console.log('Jugador creado con éxito:', data);
-                                            // Cerrar modal y mostrar mensaje de éxito
-                                            closeModal();
-                                            alert(`Te has unido a la partida ${selectedGameId} con éxito!`);
-                                        })
-                                        .catch(error => {
-                                            console.error('Error al unirse a la partida:', error);
-                                            alert('Error al unirse a la partida. Inténtalo de nuevo más tarde.');
-                                        });
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        console.log('Jugador creado con éxito:', data);
+                                        const playerId = data.id;
+                                        // Guardar el id del jugador en localStorage
+                                        localStorage.setItem('playerId', playerId);
+                                        const idUsuario = localStorage.getItem('playerId');
+                                        console.log(idUsuario);
+                                        // Cerrar modal y mostrar mensaje de éxito
+                                        closeModal();
+                                        alert(`Te has unido a la partida ${selectedGameId} con éxito!`);
+
+                                        const selectedGame = selectedGameId;
+                                        if (selectedGame) {
+                                            showGameModal(selectedGameId);
+                                        } else {
+                                            console.error('Error: selectedGame or selectedGame.players is undefined');
+                                        }
+                                    })
+                                    .catch(error => {
+                                        console.error('Error al unirse a la partida:', error);
+                                        alert('Error al unirse a la partida. Inténtalo de nuevo más tarde.');
+                                    });
                                 });
                             });
+
+                            // Mostrar el modal cuando se une a una partida
+                            
                         </script>
                     </section>
                 </section>
@@ -803,7 +991,6 @@
                     <ul id="player-list"></ul>
                     <!-- Botones del modal -->
                     <button id="close-modal">Cerrar</button>
-                    <button id="join-game">Unirse al juego</button>
                 </div>
                 <!-- Modal de jugador -->
                 <div id="player-modal" style="display: none;">
@@ -828,10 +1015,174 @@
                 }
             </script>
         </div>
+        <!-- Modal de juego -->
+        <div id="game-modal" style="display: none;">
+            <div id="game-modal-content">
+            <h2>Encuentro entre: </h2>
+            <p id="opponent-name"></p>
+            
+            <div id="game-actions">
+                <button id="rock-button">
+    <i class="fas fa-hand-rock"></i> Roca
+  </button>
+  <button id="paper-button">
+    <i class="fas fa-hand-paper"></i> Papel
+  </button>
+  <button id="scissors-button">
+    <i class="fas fa-hand-scissors"></i> Tijeras
+  </button>
+            </div>
+            <p>Reglas del juego:</p>
+            <ul>
+                <li>Roca le gana a Tijeras</li>
+                <li>Papel le gana a Roca</li>
+                <li>Tijeras le gana a Papel</li>
+            </ul>
+            <div>
+                <button onclick="closeGameModal()">Cerrar</button>
+                <script>
+                    function closeGameModal() {
+                        document.getElementById('game-modal').style.display = 'none';
+                    }
+                    function showGameModal(gameId) {
+                        const gameModal = document.getElementById('game-modal');
+                        const listModal = document.getElementById('modal');
+                        const playerModal = document.getElementById('player-modal');
+                        const detailModal = document.getElementById('modal-gameDetail');
+                        playerModal.style.display = 'none';
+                        listModal.style.display = 'none';
+                        detailModal.style.display = 'none';
+                        gameModal.style.display = 'block';
+
+                        // Hacer solicitud al servidor para obtener la lista de jugadores
+                        fetch(`https://parcial-202425-production.up.railway.app/games/${gameId}/players`)
+                        .then(response => response.json())
+                        .then(players => {
+                            const opponentNameElement = document.getElementById('opponent-name');
+                            opponentNameElement.innerHTML = '';
+                            players.forEach(player => {
+                            const opponentNameContainer = document.createElement('div');
+                            opponentNameContainer.className = 'opponent-name-container';
+
+                            const opponentAvatar = document.createElement('img');
+                            opponentAvatar.className = 'opponent-avatar';
+                            opponentAvatar.src = `https://parcial-202425-production.up.railway.app/avatars/${player.avatar}`; // Asumo que la ruta de los avatares es esta
+
+                            const opponentNameParagraph = document.createElement('p');
+                            opponentNameParagraph.textContent = player.name;
+
+                            opponentNameContainer.appendChild(opponentAvatar);
+                            opponentNameContainer.appendChild(opponentNameParagraph);
+                            opponentNameElement.appendChild(opponentNameContainer);
+                            });
+                        })
+                        .catch(error => {
+                            console.error('Error al obtener la lista de jugadores:', error);
+                        });
+
+                        // Agregar eventos a los botones de juego
+                            // Agregar eventos de clic a los botones de las jugadas
+                            const jugadas = ['rock-button', 'paper-button', 'scissors-button'];
+                            jugadas.forEach(jugada => {
+                                document.getElementById(jugada).addEventListener('click', () => {
+                                    makePlay(gameId, jugada.charAt(0));
+                                });
+                            });
+                    }
+                    // Realizar una jugada
+                    function makePlay(gameId, play) {
+                        const nameUser = localStorage.getItem('usuario');
+                        const idUser = localStorage.getItem('playerId');
+                        const playerId = idUser; // Obtener el ID del jugador actual
+                        const url = `https://parcial-202425-production.up.railway.app/games/${gameId}/players/${playerId}/play`;
+                        const data = { next: play };
+
+                        fetch(url, {
+                            method: 'PUT',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(data)
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log(data);
+                            // Mostrar el resultado de la partida
+                            if (data.result) {
+                                alert(`Ganaste! ${data.result}`);
+                            } else {
+                                alert('Esperando a que el otro jugador juegue...');
+                            }
+                        })
+                        .catch(error => {
+                            console.error(error);
+                            alert('Error al realizar la jugada');
+                        });
+                    }
+
+                    function getGameNotifications(gameId) {
+                        const url = `https://parcial-202425-production.up.railway.app/games/${gameId}/notifications`;
+                        const eventSource = new EventSource(url);
+
+                        eventSource.onmessage = (event) => {
+                            const notification = JSON.parse(event.data);
+                            showNotification(notification);
+                        };
+
+                        eventSource.onerror = (error) => {
+                            console.error(`Error al recibir notificaciones: ${error}`);
+                        };
+
+                        eventSource.onopen = () => {
+                            console.log('Connected to SSE');
+                        };
+                        }
+
+                    function showNotification(notification) {
+                        const notificationElement = document.createElement('div');
+                        notificationElement.className = 'notification';
+                        notificationElement.innerHTML = `${notification.playerId} played ${notification.play}`;
+
+                        notificationElement.style.animation = 'fadeIn 2s';
+                        notificationElement.style.animationFillMode = 'forwards';
+
+                        document.body.appendChild(notificationElement);
+
+                        setTimeout(() => {
+                            notificationElement.style.animation = 'fadeOut 2s';
+                            notificationElement.addEventListener('animationend', () => {
+                            notificationElement.remove();
+                            });
+                        }, 3000);
+                    }
+                </script>
+            </div>
+            </div>
+        </div>
     </main>
 
     <footer>
         <p><strong>Desarrollado por Gabriel Castellano</strong></p>
+        <button id="cambiar-modo">Cambiar modo</button>
+        <script>
+            const cambiarModo = () => {
+                const root = document.documentElement;
+                const modoActual = root.style.getPropertyValue('--color-fondo-main') === '#ffffff' ? 'claro' : 'oscuro';
+                const nuevoModo = modoActual === 'claro' ? 'oscuro' : 'claro';
+
+                if (nuevoModo === 'oscuro') {
+                    root.style.setProperty('--color-fondo-main', '#1d3557');
+                    root.style.setProperty('--color-texto', '#f1faee');
+                    root.style.setProperty('--color-botones', '#e63946');
+                    root.style.setProperty('--color-botones-hover', '#ffffff');
+                } else {
+                    root.style.setProperty('--color-fondo-main', '#ffffff');
+                    root.style.setProperty('--color-texto', '#333');
+                    root.style.setProperty('--color-botones', '#e63946');
+                    root.style.setProperty('--color-botones-hover', '#1D3557');
+                }
+            }
+
+            document.getElementById('cambiar-modo').addEventListener('click', cambiarModo);
+        </script>
     </footer>
 </body>
 </html>
